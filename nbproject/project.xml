@@ -12,11 +12,11 @@
                     <path-in-war>/</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${reference.ReceptGyujto-Applet.jar}</file>
+                    <file>${reference.CardApplet.jar}</file>
                     <path-in-war>/</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${reference.CardApplet.jar}</file>
+                    <file>${reference.ReceptGyujto-AppletLogic.jar}</file>
                     <path-in-war>/</path-in-war>
                 </library>
             </web-module-additional-libraries>
@@ -37,9 +37,9 @@
                 <id>jar</id>
             </reference>
             <reference>
-                <foreign-project>ReceptGyujto-Applet</foreign-project>
+                <foreign-project>ReceptGyujto-AppletLogic</foreign-project>
                 <artifact-type>jar</artifact-type>
-                <script>nbbuild.xml</script>
+                <script>build.xml</script>
                 <target>jar</target>
                 <clean-target>clean</clean-target>
                 <id>jar</id>

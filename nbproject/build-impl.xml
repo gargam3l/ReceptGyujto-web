@@ -856,7 +856,7 @@ exists or setup the property manually. For example like this:
         <ant antfile="${project.CardApplet}/build.xml" inheritall="false" target="jar">
             <property name="deploy.on.save" value="false"/>
         </ant>
-        <ant antfile="${project.ReceptGyujto-Applet}/nbbuild.xml" inheritall="false" target="jar">
+        <ant antfile="${project.ReceptGyujto-AppletLogic}/build.xml" inheritall="false" target="jar">
             <property name="deploy.on.save" value="false"/>
         </ant>
         <ant antfile="${project.TestApplet}/build.xml" inheritall="false" target="jar">
@@ -867,7 +867,7 @@ exists or setup the property manually. For example like this:
         <ant antfile="${project.CardApplet}/build.xml" inheritall="false" target="jar">
             <property name="deploy.on.save" value="false"/>
         </ant>
-        <ant antfile="${project.ReceptGyujto-Applet}/nbbuild.xml" inheritall="false" target="jar">
+        <ant antfile="${project.ReceptGyujto-AppletLogic}/build.xml" inheritall="false" target="jar">
             <property name="deploy.on.save" value="false"/>
         </ant>
         <ant antfile="${project.TestApplet}/build.xml" inheritall="false" target="jar">
@@ -1018,15 +1018,15 @@ exists or setup the property manually. For example like this:
     <target depends="init,compile,compile-jsps,-pre-dist,-do-dist-with-manifest,-do-dist-without-manifest" name="do-dist"/>
     <target depends="init" if="dist.ear.dir" name="library-inclusion-in-manifest">
         <copyfiles files="${reference.TestApplet.jar}" todir="${build.web.dir}//"/>
-        <copyfiles files="${reference.ReceptGyujto-Applet.jar}" todir="${build.web.dir}//"/>
         <copyfiles files="${reference.CardApplet.jar}" todir="${build.web.dir}//"/>
+        <copyfiles files="${reference.ReceptGyujto-AppletLogic.jar}" todir="${build.web.dir}//"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
         <copyfiles files="${reference.TestApplet.jar}" todir="${build.web.dir}//"/>
-        <copyfiles files="${reference.ReceptGyujto-Applet.jar}" todir="${build.web.dir}//"/>
         <copyfiles files="${reference.CardApplet.jar}" todir="${build.web.dir}//"/>
+        <copyfiles files="${reference.ReceptGyujto-AppletLogic.jar}" todir="${build.web.dir}//"/>
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
@@ -1441,7 +1441,7 @@ exists or setup the property manually. For example like this:
             -->
     <target depends="init" name="deps-clean" unless="no.deps">
         <ant antfile="${project.CardApplet}/build.xml" inheritall="false" target="clean"/>
-        <ant antfile="${project.ReceptGyujto-Applet}/nbbuild.xml" inheritall="false" target="clean"/>
+        <ant antfile="${project.ReceptGyujto-AppletLogic}/build.xml" inheritall="false" target="clean"/>
         <ant antfile="${project.TestApplet}/build.xml" inheritall="false" target="clean"/>
     </target>
     <target depends="init" name="do-clean">

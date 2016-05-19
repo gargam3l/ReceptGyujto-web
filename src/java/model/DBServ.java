@@ -6,7 +6,9 @@
 package model;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author 604772006
  */
-public class DBServ extends HttpServlet{
+public class DBServ extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,7 +37,7 @@ public class DBServ extends HttpServlet{
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DBServ</title>");            
+            out.println("<title>Servlet DBServ</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet DBServ at " + request.getContextPath() + "</h1>");
@@ -56,21 +58,27 @@ public class DBServ extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-            if (request.getParameter("action").equals("test")) {
+
+        if (request.getParameter("action").equals("test")) {
             response.setContentType("text/plain");
             PrintWriter out = response.getWriter();
             //    out.println("teszt");
             out.println(DBLogic.kapcsolatTeszt());
         } else if (request.getParameter("action").equals("inic")) {
             DBLogic.inic();
-        } else if (request.getParameter("button3") != null) {
-            //myClass.method3();
+        } else if (request.getParameter("action").equals("otevoMennyTipus")) {
+            String contentType = "application/x-java-serialized-object";
+            response.setContentType(contentType);
+            ObjectOutputStream out = new ObjectOutputStream(response.getOutputStream());
+            ArrayList<String> value = new ArrayList<>();
+            value=DBLogic.otevoMennyTipusok();
+            out.writeObject(value);
+            
+            out.flush();
         } else {
             // ???
         }
-           // processRequest(request, response);
+        // processRequest(request, response);
     }
 
     /**
@@ -81,7 +89,6 @@ public class DBServ extends HttpServlet{
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -93,7 +100,6 @@ public class DBServ extends HttpServlet{
      *
      * @return a String containing servlet description
      */
-    
     @Override
     public String getServletInfo() {
         return "Short description";

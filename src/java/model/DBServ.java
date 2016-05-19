@@ -63,14 +63,14 @@ public class DBServ extends HttpServlet{
             PrintWriter out = response.getWriter();
             //    out.println("teszt");
             out.println(DBLogic.kapcsolatTeszt());
-        } else if (request.getParameter("button2") != null) {
-            //myClass.method2();
+        } else if (request.getParameter("action").equals("inic")) {
+            DBLogic.inic();
         } else if (request.getParameter("button3") != null) {
             //myClass.method3();
         } else {
             // ???
         }
-            processRequest(request, response);
+           // processRequest(request, response);
     }
 
     /**
@@ -93,6 +93,7 @@ public class DBServ extends HttpServlet{
      *
      * @return a String containing servlet description
      */
+    
     @Override
     public String getServletInfo() {
         return "Short description";

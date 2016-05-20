@@ -6,9 +6,12 @@
 package model;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +78,40 @@ public class DBServ extends HttpServlet {
             out.writeObject(value);
             
             out.flush();
-        } else {
+        }else if (request.getParameter("action").equals("receptetMent")) {
+            try {
+                String contentType = "application/x-java-serialized-object";
+                response.setContentType(contentType);
+                
+                ObjectInputStream in= new ObjectInputStream(request.getInputStream());
+                Recept recept=new Recept();
+                recept=(Recept)in.readObject();
+                DBLogic.receptetMent(recept);
+                
+                
+                in.close();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        else if (request.getParameter("action").equals("receptetSzerkeszt")) {
+            try {
+                String contentType = "application/x-java-serialized-object";
+                response.setContentType(contentType);
+                String aktualisRecept=request.getParameter("aktualisRecept");
+                ObjectInputStream in= new ObjectInputStream(request.getInputStream());
+                Recept recept=new Recept();
+                recept=(Recept)in.readObject();
+                DBLogic.receptetSzerkeszt(aktualisRecept, recept);
+                
+                
+                in.close();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        else {
             // ???
         }
         // processRequest(request, response);
@@ -92,7 +128,7 @@ public class DBServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request,response);
     }
 
     /**

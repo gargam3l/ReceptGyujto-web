@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author 604772006
@@ -72,5 +74,25 @@ public class Osszetevok {
         return false;
     }
     
-   
+   private synchronized void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        stream.defaultWriteObject();
+        
+        }
+    
+
+    private void readObject(java.io.ObjectInputStream stream) throws
+            java.io.IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+       
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.mennyiseg_egyseg);
+        hash = 59 * hash + Objects.hashCode(this.mennyiseg_tipus);
+        hash = 59 * hash + Objects.hashCode(this.osszetevo_fajta);
+        return hash;
+    }
+    
 }

@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -100,7 +101,7 @@ public class DBServ extends HttpServlet {
             try {
                 String contentType = "application/x-java-serialized-object";
                 response.setContentType(contentType);
-                String aktualisRecept = request.getParameter("aktualisRecept");
+                
                 ObjectInputStream in = new ObjectInputStream(request.getInputStream());
                 String aktualis = in.readUTF();
 
@@ -132,27 +133,41 @@ public class DBServ extends HttpServlet {
                 out.flush();
             } catch (Exception ex) {
                 Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Hiba", JOptionPane.ERROR_MESSAGE);
             }
         } 
-        else if (request.getParameter("action").equals("keresMegnevezesre")) {
+        else if (request.getParameter("action").equals("keresOsszetevoRecepthez")) {
             try {
                 String contentType = "application/x-java-serialized-object";
                 response.setContentType(contentType);
-
-                //BufferedReader in= new BufferedReader(new InputStreamReader(request.getInputStream()));
-                ArrayList<Recept> receptTar = new ArrayList<>();
+               
+                ArrayList<Osszetevok> eredmeny = new ArrayList<>();
 
                 String parameter = request.getParameter("kulcs");
                 String dekodoltParameter = URLDecoder.decode(parameter, "UTF-8");
 
                 ObjectOutputStream out = new ObjectOutputStream(response.getOutputStream());
 
-                receptTar = DBLogic.keresMegnevezesre(dekodoltParameter);
-                out.writeObject(receptTar);
+                eredmeny = DBLogic.keresOsszetevoRecepthez(dekodoltParameter);
+                out.writeObject(eredmeny);
 
                 out.flush();
             } catch (Exception ex) {
                 Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Hiba", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else if (request.getParameter("action").equals("receptetTorol")) {
+            try {
+                String contentType = "application/x-java-serialized-object";
+                response.setContentType(contentType);
+                ObjectInputStream in = new ObjectInputStream(request.getInputStream());
+                String aktualis = in.readUTF();
+                in.close();
+               DBLogic.receptetTorol(aktualis);
+            } catch (Exception ex) {
+                Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Hiba", JOptionPane.ERROR_MESSAGE);
             }
         }
         else {

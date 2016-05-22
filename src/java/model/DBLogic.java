@@ -628,7 +628,7 @@ public class DBLogic implements DBConn{
         }
         return eredmeny;
     }
-    /*
+    
     public static ArrayList<Osszetevok> keresOsszetevoRecepthez(String kulcs)
     
     {
@@ -695,5 +695,5 @@ public class DBLogic implements DBConn{
         }
     }
     
-*/    
+  
 }

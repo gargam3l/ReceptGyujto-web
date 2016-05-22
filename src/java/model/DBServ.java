@@ -142,10 +142,11 @@ public class DBServ extends HttpServlet {
                 response.setContentType(contentType);
                
                 ArrayList<Osszetevok> eredmeny = new ArrayList<>();
-
+                
                 String parameter = request.getParameter("kulcs");
                 String dekodoltParameter = URLDecoder.decode(parameter, "UTF-8");
-
+                
+                
                 ObjectOutputStream out = new ObjectOutputStream(response.getOutputStream());
 
                 eredmeny = DBLogic.keresOsszetevoRecepthez(dekodoltParameter);

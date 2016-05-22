@@ -606,10 +606,10 @@ public class DBLogic implements DBConn{
             System.out.println(e.getMessage());
         }
     }
-    /*
-    public static ReceptTar keresMegnevezesre (String kulcs)
+    
+    public static ArrayList<Recept> keresMegnevezesre (String kulcs)
     {
-        ReceptTar eredmeny = new ReceptTar();
+        ArrayList<Recept> eredmeny=new ArrayList<>();
         try {
             kapcsolatNyit();
             Statement s=kapcsolat.createStatement();
@@ -619,7 +619,7 @@ public class DBLogic implements DBConn{
             while(rs.next()) 
             {
                 
-                eredmeny.receptetHozzaad(new Recept(rs.getString("nev"), rs.getString("elkeszites")));
+                eredmeny.add(new Recept(rs.getString("nev"), rs.getString("elkeszites")));
             }
             kapcsolatZár();
         }
@@ -628,7 +628,7 @@ public class DBLogic implements DBConn{
         }
         return eredmeny;
     }
-    
+    /*
     public static ArrayList<Osszetevok> keresOsszetevoRecepthez(String kulcs)
     
     {

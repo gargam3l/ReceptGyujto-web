@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,43 +77,83 @@ public class DBServ extends HttpServlet {
             response.setContentType(contentType);
             ObjectOutputStream out = new ObjectOutputStream(response.getOutputStream());
             ArrayList<String> value = new ArrayList<>();
-            value=DBLogic.otevoMennyTipusok();
+            value = DBLogic.otevoMennyTipusok();
             out.writeObject(value);
-            
+
             out.flush();
-        }else if (request.getParameter("action").equals("receptetMent")) {
+        } else if (request.getParameter("action").equals("receptetMent")) {
             try {
                 String contentType = "application/x-java-serialized-object";
                 response.setContentType(contentType);
-                
-                ObjectInputStream in= new ObjectInputStream(request.getInputStream());
+
+                ObjectInputStream in = new ObjectInputStream(request.getInputStream());
                 //BufferedReader in= new BufferedReader(new InputStreamReader(request.getInputStream()));
-                Recept recept=new Recept();
-                recept=(Recept)in.readObject();
+                Recept recept = new Recept();
+                recept = (Recept) in.readObject();
                 DBLogic.receptetMent(recept);
-                
-                
+
                 in.close();
             } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (request.getParameter("action").equals("receptetSzerkeszt")) {
+            try {
+                String contentType = "application/x-java-serialized-object";
+                response.setContentType(contentType);
+                String aktualisRecept = request.getParameter("aktualisRecept");
+                ObjectInputStream in = new ObjectInputStream(request.getInputStream());
+                String aktualis = in.readUTF();
+
+                Recept recept = new Recept();
+                recept = (Recept) in.readObject();
+
+                DBLogic.receptetSzerkeszt(aktualis, recept);
+
+                in.close();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (request.getParameter("action").equals("keresMegnevezesre")) {
+            try {
+                String contentType = "application/x-java-serialized-object";
+                response.setContentType(contentType);
+
+                //BufferedReader in= new BufferedReader(new InputStreamReader(request.getInputStream()));
+                ArrayList<Recept> receptTar = new ArrayList<>();
+
+                String parameter = request.getParameter("kulcs");
+                String dekodoltParameter = URLDecoder.decode(parameter, "UTF-8");
+
+                ObjectOutputStream out = new ObjectOutputStream(response.getOutputStream());
+
+                receptTar = DBLogic.keresMegnevezesre(dekodoltParameter);
+                out.writeObject(receptTar);
+
+                out.flush();
+            } catch (Exception ex) {
                 Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
             }
         } 
-        else if (request.getParameter("action").equals("receptetSzerkeszt")) {
+        else if (request.getParameter("action").equals("keresMegnevezesre")) {
             try {
                 String contentType = "application/x-java-serialized-object";
                 response.setContentType(contentType);
-                String aktualisRecept=request.getParameter("aktualisRecept");
-                ObjectInputStream in= new ObjectInputStream(request.getInputStream());
-                Recept recept=new Recept();
-                recept=(Recept)in.readObject();
-                DBLogic.receptetSzerkeszt(aktualisRecept, recept);
-                
-                
-                in.close();
-            } catch (ClassNotFoundException ex) {
+
+                //BufferedReader in= new BufferedReader(new InputStreamReader(request.getInputStream()));
+                ArrayList<Recept> receptTar = new ArrayList<>();
+
+                String parameter = request.getParameter("kulcs");
+                String dekodoltParameter = URLDecoder.decode(parameter, "UTF-8");
+
+                ObjectOutputStream out = new ObjectOutputStream(response.getOutputStream());
+
+                receptTar = DBLogic.keresMegnevezesre(dekodoltParameter);
+                out.writeObject(receptTar);
+
+                out.flush();
+            } catch (Exception ex) {
                 Logger.getLogger(DBServ.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
         else {
             // ???
@@ -131,7 +172,7 @@ public class DBServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request,response);
+        doGet(request, response);
     }
 
     /**

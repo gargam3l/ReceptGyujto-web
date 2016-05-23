@@ -8,4 +8,4 @@ Szükséges előkövetelmények:
 5. Security kivétel hozzáadása Java applethez - vezérlőpult - java- security - Edit site list - Add - http://localhost:8084/
 6. Ellenőrzés, hogy a webes project (ReceptGyujto-web) megfelelő útvonallal éri el az applet projektet(ReceptGyujto-AppletLogic), mint függőségét - Project properties - Build/Packaging alatt
 7. Ellenőrzés, hogy a webes project (ReceptGyujto-web) megfelelő útvonallal éri el a JDBC jart, mint függőségét - Project properties - Libraries alatt
-8. Web projekt futtatása internet explorer böngészőt használva
+8. Web projekt (ReceptGyujto-web) futtatása internet explorer böngészőt használva

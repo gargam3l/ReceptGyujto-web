@@ -72,6 +72,9 @@ public class DBServ extends HttpServlet {
             //    out.println("teszt");
             out.println(DBLogic.kapcsolatTeszt());
         } else if (request.getParameter("action").equals("inic")) {
+            response.setContentType("text/plain");
+            PrintWriter out = response.getWriter();
+            out.println("inic");
             DBLogic.inic();
         } else if (request.getParameter("action").equals("otevoMennyTipus")) {
             String contentType = "application/x-java-serialized-object";
